@@ -7,7 +7,7 @@ import cats.data.{NonEmptyList, Xor}
 import com.company.States._
 import com.company.{ConferenceId, EntityId}
 import com.gu.scanamo.DynamoFormat
-import com.gu.scanamo.error.{DynamoReadError, InvalidPropertiesError, MissingProperty, PropertyReadError}
+import com.gu.scanamo.error.{InvalidPropertiesError, MissingProperty, PropertyReadError}
 
 trait DynamoFormats {
 
