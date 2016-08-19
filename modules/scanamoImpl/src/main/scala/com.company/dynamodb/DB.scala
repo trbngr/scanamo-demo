@@ -9,7 +9,6 @@ import com.gu.scanamo.{DynamoFormat, ScanamoAsync}
 
 import scala.collection.convert.decorateAsJava._
 import scala.concurrent.{ExecutionContext, Future}
-import scala.language.implicitConversions
 
 trait DB extends DynamoFormats {
   private val config = DynamoDBConfig()

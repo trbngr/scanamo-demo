@@ -10,6 +10,8 @@ import com.company.readmodel._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{FlatSpec, Matchers}
 
+import scala.concurrent.ExecutionContext.Implicits.global
+
 class DynamoConferenceRepoSpec extends FlatSpec with Matchers with ScalaFutures with DBTestSupport {
 
   val testTableName: String = s"TestConferences"

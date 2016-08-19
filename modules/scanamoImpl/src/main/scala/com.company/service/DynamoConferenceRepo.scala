@@ -7,6 +7,7 @@ import com.company.dynamodb.DB
 import com.company.readmodel.Conference
 import com.gu.scanamo.error.DynamoReadError
 import com.gu.scanamo.query.UniqueKey
+import com.gu.scanamo.{DerivedDynamoFormat, DynamoFormat, ScanamoAsync}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -22,9 +23,7 @@ class DynamoConferenceRepo(tableName: String)(implicit ec: ExecutionContext) ext
   def init = createTable(tableName)('id -> ScalarAttributeType.S)
 
   def read(id: ConferenceId)(implicit ec: ExecutionContext): Future[Option[Conference]] =
-    get[Conference](tableName) {
-      UniqueKey('id -> id.id)
-    } map {
+    get[Conference](tableName)(UniqueKey('id -> id.id)) map {
       case Some(Xor.Right(conference)) => Some(conference)
       case Some(Xor.Left(error: DynamoReadError)) =>
         println(describe(error))
