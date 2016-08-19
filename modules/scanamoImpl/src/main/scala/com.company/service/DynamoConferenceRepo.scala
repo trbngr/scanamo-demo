@@ -21,10 +21,6 @@ class DynamoConferenceRepo(tableName: String) extends ConferenceRepo with DB {
   import DynamoReadError._
   import com.gu.scanamo.syntax._
 
-  case class ConferenceDocument(id: String, details: Details)
-  implicit def Conf2Doc(conf: Conference): ConferenceDocument = ConferenceDocument(conf.id.id, conf.details)
-  implicit def Doc2Conf(doc: ConferenceDocument): Conference = Conference(ConferenceId.fromString(doc.id), doc.details)
-
   def init = createTable(tableName)('id -> ScalarAttributeType.S)
 
   def read(id: ConferenceId)(implicit ec: ExecutionContext): Future[Option[Conference]] = {
