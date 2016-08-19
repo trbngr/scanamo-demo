@@ -50,11 +50,8 @@ trait DB extends DynamoFormats {
 
   protected def keySchema(attributes: Seq[(Symbol, ScalarAttributeType)]) = {
     val hashKeyWithType :: rangeKeyWithType = attributes.toList
-    val hashPk: (Symbol, KeyType) = hashKeyWithType._1 -> KeyType.HASH
-    val scan: List[(Symbol, KeyType)] = rangeKeyWithType.map(t => t._1 -> KeyType.RANGE)
-    val keySchemas: List[(Symbol, KeyType)] = hashPk :: scan
-    val map: List[KeySchemaElement] = keySchemas.map { case (symbol, keyType) => new KeySchemaElement(symbol.name, keyType) }
-    map.asJava
+    val keySchemas = hashKeyWithType._1 -> KeyType.HASH :: rangeKeyWithType.map(t => t._1 -> KeyType.RANGE)
+    keySchemas.map { case (symbol, keyType) => new KeySchemaElement(symbol.name, keyType) }.asJava
   }
 
   protected def attributeDefinitions(attributes: Seq[(Symbol, ScalarAttributeType)]) = {
@@ -62,5 +59,5 @@ trait DB extends DynamoFormats {
     map.asJava
   }
 
-  protected val arbitraryThroughputThatIsIgnoredByDynamoDBLocal = new ProvisionedThroughput()
+  protected val arbitraryThroughputThatIsIgnoredByDynamoDBLocal = new ProvisionedThroughput(1L, 1L)
 }

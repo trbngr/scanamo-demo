@@ -20,14 +20,12 @@ class DynamoConferenceRepoSpec extends FlatSpec with Matchers with ScalaFutures 
     usingTable(testTableName)('id -> ScalarAttributeType.S) {
       val repo = DynamoConferenceRepo(testTableName)
       val id = ConferenceId.generate()
-      val sessions: Seq[Session] = (1 to 100).map { _ => Session(id, EntityId.generate(), Unpublished) }
-      val speakers: Seq[Speaker] = (1 to 100).map(i => Speaker(id, EntityId.generate(), Unpublished, published = false, "chris@example.com", "Chris", "Martin", "Stephen", "Mr."))
       val conf = Conference(
         id,
         details = Details("My Cnference", "Description", EntityId.generate(), OffsetDateTime.MIN, OffsetDateTime.MAX, "UTC"),
         venue = Venue("My Venue"),
-        speakers = speakers.toSet,
-        sessions = sessions.toSet
+        speakers = (1 to 100).map(i => Speaker(id, EntityId.generate(), Unpublished, published = false, "chris@example.com", "Chris", "Martin", "Stephen", "Mr.")).toSet,
+        sessions = (1 to 100).map { _ => Session(id, EntityId.generate(), Unpublished) }.toSet
       )
       repo.save(conf).futureValue
       repo.read(id).futureValue shouldEqual Some(conf)

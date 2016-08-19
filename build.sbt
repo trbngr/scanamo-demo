@@ -4,7 +4,7 @@ import sbt.Keys._
 lazy val buildSettings = Seq(
   version := "1.0",
   organization := "com.company",
-  organizationName := "Big Ass Ballerz",
+  organizationName := "com.company",
   scalaVersion := "2.11.8",
   scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-Xlint:-infer-any", "-Xfatal-warnings", "-language:postfixOps"),
   testOptions in Test += Tests.Argument("-oD")
