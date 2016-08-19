@@ -18,8 +18,8 @@ case class Conference(id: ConferenceId,
                       sessions: Set[Session] = Set.empty
                      )
 
-case class Details(title: String = "", description: String = "", organizerAccountId: EntityId = EntityId.empty, startDate: OffsetDateTime = OffsetDateTime.now(), endDate: OffsetDateTime = OffsetDateTime.now(), timeZone: String = "UTC")
-case class Venue(name: String = "")
+case class Details(title: Option[String] = None, description: Option[String] = None, organizerAccountId: EntityId = EntityId.empty, startDate: OffsetDateTime = OffsetDateTime.now(), endDate: OffsetDateTime = OffsetDateTime.now(), timeZone: String = "UTC")
+case class Venue(name: Option[String] = None)
 
 case class Session(
                     conferenceId: ConferenceId,
@@ -32,10 +32,10 @@ case class Speaker(
                     id: EntityId,
                     state: EntityState = Unpublished,
                     published: Boolean = false,
-                    email: String = "",
-                    first: String = "",
-                    last: String = "",
-                    middle: String = "",
-                    salutation: String = "",
-                    suffix: String = "",
+                    email: Option[String] = None,
+                    first: Option[String] = None,
+                    last: Option[String] = None,
+                    middle: Option[String] = None,
+                    salutation: Option[String] = None,
+                    suffix: Option[String] = None,
                     attributes: Map[String, String] = Map.empty) extends ConferenceEntity with IdEquality

@@ -40,13 +40,13 @@ trait DB extends DynamoFormats {
     arbitraryThroughputThatIsIgnoredByDynamoDBLocal
   )
 
-  def put[T: DynamoFormat](tableName: String)(item: T)(implicit ec: ExecutionContext) = ScanamoAsync.put(asyncClient)(tableName)(item)
-
-  def get[T: DynamoFormat](tableName: String)(key: UniqueKey[_])(implicit ec: ExecutionContext): Future[Option[Xor[DynamoReadError, T]]] =
-    ScanamoAsync.get[T](asyncClient)(tableName)(key)
-
-  def getAll[T: DynamoFormat](tableName: String)(keys: UniqueKeys[_])(implicit ec: ExecutionContext): Future[List[Xor[DynamoReadError, T]]] =
-    ScanamoAsync.getAll[T](asyncClient)(tableName)(keys)
+//  def put[T: DynamoFormat](tableName: String)(item: T)(implicit ec: ExecutionContext) = ScanamoAsync.put(asyncClient)(tableName)(item)
+//
+//  def get[T: DynamoFormat](tableName: String)(key: UniqueKey[_])(implicit ec: ExecutionContext): Future[Option[Xor[DynamoReadError, T]]] =
+//    ScanamoAsync.get[T](asyncClient)(tableName)(key)
+//
+//  def getAll[T: DynamoFormat](tableName: String)(keys: UniqueKeys[_])(implicit ec: ExecutionContext): Future[List[Xor[DynamoReadError, T]]] =
+//    ScanamoAsync.getAll[T](asyncClient)(tableName)(keys)
 
   protected def keySchema(attributes: Seq[(Symbol, ScalarAttributeType)]) = {
     val hashKeyWithType :: rangeKeyWithType = attributes.toList

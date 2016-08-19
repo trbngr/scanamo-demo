@@ -9,7 +9,7 @@ trait DBTestSupport extends DB {
     val res = try {
       thunk
     } finally {
-      client.deleteTable(tableName)
+//      client.deleteTable(tableName)
       ()
     }
     res

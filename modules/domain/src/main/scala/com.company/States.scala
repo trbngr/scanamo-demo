@@ -18,6 +18,9 @@ object States {
     extends SessionState
       with SpeakerState
 
+  case object Attended
+    extends AttendeeState
+
   case object Cancelled
     extends AppointmentState
       with AttendeeState
@@ -27,9 +30,6 @@ object States {
       with SurveyState
 
   case object Confirmed
-    extends AttendeeState
-
-  case object Attended
     extends AttendeeState
 
   case object Declined
