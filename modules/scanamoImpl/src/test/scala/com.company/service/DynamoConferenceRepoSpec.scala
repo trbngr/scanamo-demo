@@ -31,8 +31,8 @@ class DynamoConferenceRepoSpec extends FlatSpec with Matchers with ScalaFutures 
         sessions = (1 to 5).map { _ => Session(id, EntityId.generate(), Unpublished) }.toSet
       )
       repo.save(conf).futureValue
-      println(repo.read(id).futureValue)
-//      repo.read(id).futureValue shouldEqual Some(conf)
+//      println(repo.read(id).futureValue)
+      repo.read(id).futureValue.get shouldEqual conf
     }
 
   }
