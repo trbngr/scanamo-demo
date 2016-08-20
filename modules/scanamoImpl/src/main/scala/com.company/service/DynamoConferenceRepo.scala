@@ -17,19 +17,25 @@ object DynamoConferenceRepo {
 
 class DynamoConferenceRepo(tableName: String) extends ConferenceRepo with DB {
 
-  import DynamoReadError._
+  import DynamoReadError._ 
   import com.gu.scanamo.syntax._
 
   def init = createTable(tableName)('id -> ScalarAttributeType.S)
 
   def read(id: ConferenceId)(implicit ec: ExecutionContext): Future[Option[Conference]] =
-    get[Conference](tableName)('id -> id.id) map {
-      case Some(Xor.Right(conference)) => Some(conference)
-      case Some(Xor.Left(error: DynamoReadError)) =>
-        println(describe(error))
-        None
-      case _ => None
+    useTable(tableName) { table =>
+      table.get[Conference]('id -> id.id) map {
+        case Some(Xor.Right(conference)) => Some(conference)
+        case Some(Xor.Left(error: DynamoReadError)) =>
+          println(describe(error))
+          None
+        case _ => None
+      }
+
     }
 
-  def save(model: Conference)(implicit ec: ExecutionContext): Future[Unit] = put(tableName)(model) map (r => Unit)
+  def save(model: Conference)(implicit ec: ExecutionContext): Future[Unit] =
+    useTable(tableName) { table =>
+      table.put(model) map (r => Unit)
+    }
 }
